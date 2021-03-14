@@ -46,6 +46,7 @@ func (handler *HttpsHandler) setupHttps() error {
 func genCert(scriptPath, host, savePath string) error {
 	genCmd := exec.Command(scriptPath+"/gen_cert.sh", host, scriptPath, strconv.Itoa(rand.Intn(10000)), savePath)
 	_, err := genCmd.CombinedOutput()
+
 	if err != nil {
 		return err
 	}
