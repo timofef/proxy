@@ -25,7 +25,7 @@ func main() {
 	http.HandleFunc("/", repeatRequestHandlers.ListAllRequests)
 	http.HandleFunc("/request", repeatRequestHandlers.ShowRequest)
 	http.HandleFunc("/repeat", repeatRequestHandlers.RepeatRequest)
-	/*http.HandleFunc("/scan", repeatRequestHandlers.ScanRequestForXXE)*/
+	http.HandleFunc("/scan", repeatRequestHandlers.ScanRequestForXXE)
 
 	// Start repeat server
 	go http.ListenAndServe(":8082", nil)
