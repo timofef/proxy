@@ -4,6 +4,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"io"
 	"net/http"
+	"proxy/src/database"
 	"proxy/src/handlers"
 )
 
@@ -11,6 +12,10 @@ func RepeatRequest(responseWriter http.ResponseWriter, request *http.Request) {
 	dbRequest, err := getRequestFromDatabase(responseWriter, request)
 	if err != nil {
 		logrus.Error(err)
+		return
+	}
+
+	if (dbRequest == database.Request{}) {
 		return
 	}
 

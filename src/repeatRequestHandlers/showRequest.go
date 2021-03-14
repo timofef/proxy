@@ -4,12 +4,18 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"proxy/src/database"
 )
 
 func ShowRequest(responseWriter http.ResponseWriter, request *http.Request) {
 	dbRequest, err := getRequestFromDatabase(responseWriter, request)
+
 	if err != nil {
 		logrus.Error(err)
+		return
+	}
+
+	if (dbRequest == database.Request{}) {
 		return
 	}
 

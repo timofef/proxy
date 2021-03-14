@@ -5,12 +5,22 @@ import (
 	"net/http"
 	"proxy/src/proxyHandler"
 	"proxy/src/repeatRequestHandlers"
-
-	//"proxy/src/repeatRequestHandlers"
 )
 
 func init() {
 	logrus.SetLevel(logrus.InfoLevel)
+
+	// Generate root certificate
+	/*pwd, err := os.Getwd()
+	if err != nil {
+		logrus.Error(err)
+	}
+
+	genCmd := exec.Command(pwd+"/cert")
+	_, err = genCmd.CombinedOutput()
+	if err != nil {
+		logrus.Error(err)
+	}*/
 }
 
 func main() {

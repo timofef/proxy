@@ -41,22 +41,15 @@ func ScanRequestForXXE(responseWriter http.ResponseWriter, request *http.Request
 		logrus.Error(err)
 	}
 
-	//handlers.CopyHttpHeaders(response.Header, responseWriter.Header())
-	//responseWriter.WriteHeader(response.StatusCode)
-	//_, _ = io.Copy(responseWriter, response.Body)
-
 	textResp, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		logrus.Warn("Can't search for vulnerability")
 	}
-	logrus.Info("SCANNING FOR XXE")
+
 	if strings.Contains(string(textResp), "root:") {
-		logrus.Info("HAS XXE")
 		_, _ = fmt.Fprintf(responseWriter, "------- WARNING: Request contains XXE vulnerability\n")
 	} else {
-		logrus.Info("NO XXE")
-		_, err = fmt.Fprintf(responseWriter, "------- No XXE vulnerabilities detected\n")
-		logrus.Error(err)
+		_, _ = fmt.Fprintf(responseWriter, "------- No XXE vulnerabilities detected\n")
 	}
 
 	_ = response.Body.Close()

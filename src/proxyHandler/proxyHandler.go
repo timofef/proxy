@@ -4,8 +4,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"proxy/src/database"
-	"proxy/src/handlers/httpHandler"
 	"proxy/src/handlers"
+	"proxy/src/handlers/httpHandler"
+	"proxy/src/handlers/httpsHandler"
 )
 
 func Serve(responseWriter http.ResponseWriter, request *http.Request) {
@@ -19,13 +20,11 @@ func Serve(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var handler handlers.HandlerInterface
 
-	/*if request.Method == http.MethodConnect {
-		handler, err = NewHttpsHandler(responseWriter, request, db)
+	if request.Method == http.MethodConnect {
+		handler, err = httpsHandler.NewHttpsHandler(responseWriter, request, db)
 	} else {
-		handler, err = NewHttpHandler(responseWriter, request, db)
-	}*/
-
-	handler = httpHandler.NewHttpHandler(responseWriter, request, db)
+		handler = httpHandler.NewHttpHandler(responseWriter, request, db)
+	}
 
 	err = handler.ProxyRequest()
 	if err != nil {
